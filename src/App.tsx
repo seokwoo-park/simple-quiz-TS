@@ -9,7 +9,7 @@ import { QuestionState ,Difficulty } from './API'
 
 // styles
 
-import {GlobalStyle, Wrapper} from './App.styles'
+import {GlobalStyle, Wrapper, Select} from './App.styles'
 
 export type AnswerObject = {
   question: string
@@ -29,7 +29,7 @@ function App() {
   const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([])
   const [score, setScore] = useState(0)
   const [gameOver, setGameOver] = useState(true)
-  const [difficulty, setDifficulty] = useState<"easy"|"medium"|"hard">("easy")
+  const [difficulty, setDifficulty] = useState<Difficulty|string>(Difficulty.EASY)
 
   const startTrivia = async () => {
     setLoading(true)
@@ -92,14 +92,16 @@ function App() {
         {gameOver || userAnswers.length === TOTAL_QUESTIONS 
         ? (
         <>
+        <Select>
           <label>
-          Choose Difficulty
-            <select value={difficulty} onChange={onHandleChange}>
+          <p>Choose Difficulty</p>
+            <select className="select-css" value={difficulty} onChange={onHandleChange}>
               <option value={Difficulty.EASY}>{Difficulty.EASY.toUpperCase()}</option>
               <option value={Difficulty.MEDIUM}>{Difficulty.MEDIUM.toUpperCase()}</option>
               <option value={Difficulty.HARD}>{Difficulty.HARD.toUpperCase()}</option>
             </select>
           </label>
+        </Select>
 
           <button className="start" onClick={startTrivia}>
             Start
